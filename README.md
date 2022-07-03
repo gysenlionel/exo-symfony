@@ -26,6 +26,9 @@ Start the server
   symfony serve
 ```
 
+Use mysql as db.
+Set up the .env, create the db, load the fixtures and run the migrations.
+
 ### Client Side
 
 ```bash
