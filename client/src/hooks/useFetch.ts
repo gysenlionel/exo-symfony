@@ -5,36 +5,36 @@ import { useEffect, useState } from "react";
 const useFetch = (url:string) => {
 
     const [data,setData] = useState<any>([])
-    const [loading,setLoading] = useState(false)
+    const [isLoading,setIsLoading] = useState(false)
     const [error,setError] = useState<boolean | any>(false)
-    const API: string = 'http://localhost:8000/api'
+    const API: string = process.env.REACT_APP_API as string
 
     useEffect(()=>{
         const fetchData = async ()=>{
-        setLoading(true)
+        setIsLoading(true)
         try {
             const res = await axios.get(`${API}${url}`)
             setData(res.data)
         } catch (err) {
             setError(err)
         }
-        setLoading(false)
+        setIsLoading(false)
     }
     fetchData()
-    },[API,url])
+    },[url])
    
     const reFetch = async() => {
-        setLoading(true)
+        setIsLoading(true)
         try {
             const res = await axios.get(`${API}${url}`)
             setData(res.data)
         } catch (err) {
             setError(err)
         }
-        setLoading(false)
+        setIsLoading(false)
     }
     
-    return {data,loading,error,reFetch}
+    return {data,isLoading,error,reFetch}
 }
 
 export default useFetch

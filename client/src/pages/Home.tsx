@@ -3,58 +3,56 @@ import useFetch from "../hooks/useFetch";
 import { IHotelType } from "../types/hotels.model";
 import Card from "../components/Card";
 import { IUserType } from "../types/users.model";
-import { removeSlug } from "../utils/removeSlug";
-import { USER } from "../utils/User";
+import { getIdFromSlug } from "../utils/getIdFromSlug";
 import axios from "axios";
 
 interface IHomeProps {}
 
 interface IDataHotels {
   data: IHotelType[];
-  loading: boolean;
+  isLoading: boolean;
   error: any;
   reFetch: () => Promise<void>;
 }
 
 interface IDataUsers {
-  data: IUserType[];
-  loading: boolean;
+  data: IUserType;
+  isLoading: boolean;
   error: any;
   reFetch: () => Promise<void>;
 }
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
+  const userId: number = parseInt(process.env.REACT_APP_USER as string);
+  const API: string = process.env.REACT_APP_API as string;
   const {
     data: hotels,
-    loading: hotelsLoading,
+    isLoading: hotelsLoading,
     error: hotelsError,
     reFetch: reFetchHotels,
   }: IDataHotels = useFetch(`/hotels?page=1`);
 
   const {
-    data: users,
-    loading: usersLoading,
+    data: user,
+    isLoading: usersLoading,
     error: usersError,
     reFetch: reFetchUsers,
-  }: IDataUsers = useFetch(`/users`);
+  }: IDataUsers = useFetch(`/users/${userId}`);
 
-  const userFav = users[USER]?.favoris?.map((fav) => removeSlug(fav));
+  const userFav = user?.favoris?.map((fav) => getIdFromSlug(fav));
 
   const handleAdd = async (hotelId: number) => {
     try {
-      const res = await axios.get(
-        `http://localhost:8000/api/users/${USER + 1}/addfav/${hotelId}`
-      );
+      const res = await axios.get(`${API}/users/${userId}/addfav/${hotelId}`);
       reFetchHotels();
       reFetchUsers();
     } catch (err) {
       console.error(err);
     }
   };
-
   const handleRemove = async (hotelId: number) => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/users/${USER + 1}/removefav/${hotelId}`
+        `${API}/users/${userId}/removefav/${hotelId}`
       );
       reFetchHotels();
       reFetchUsers();

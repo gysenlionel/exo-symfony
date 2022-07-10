@@ -1,25 +1,25 @@
 import * as React from "react";
 import useFetch from "../hooks/useFetch";
 import { IHotelType } from "../types/hotels.model";
-import { removeSlug } from "../utils/removeSlug";
-import { USER } from "../utils/User";
+import { getIdFromSlug } from "../utils/getIdFromSlug";
 
 interface IFavorisProps {}
 
 interface IDataHotels {
   data: IHotelType[];
-  loading: boolean;
+  isLoading: boolean;
 }
 const Favoris: React.FunctionComponent<IFavorisProps> = (props) => {
-  const { data: hotels, loading: loadHotels }: IDataHotels =
+  const userId: number = parseInt(process.env.REACT_APP_USER as string);
+  const { data: hotels, isLoading: loadHotels }: IDataHotels =
     useFetch(`/hotels/`);
   const hotelsArr: IHotelType[] | undefined = [];
 
   const hotelsArray = () => {
     hotels.map((h) => {
       h?.favoris?.map((slug) => {
-        let id = removeSlug(slug);
-        if (id === (USER + 1).toString()) {
+        let id = getIdFromSlug(slug);
+        if (id === userId.toString()) {
           hotelsArr.push(h);
         }
       });

@@ -17,11 +17,12 @@ const Card: React.FunctionComponent<ICardProps> = ({
   handleAdd,
   handleRemove,
 }) => {
+  const isHotelInFavorites = userFav && userFav.includes(hotel.id.toString());
   return (
     <div className="w-auto h-16 text-center rounded shadow font-Taviraj font-medium bg-slate-300">
       <h3>{hotel.name}</h3>
       <div className="mt-1">
-        {userFav && userFav.includes(hotel.id.toString()) ? (
+        {isHotelInFavorites ? (
           <FontAwesomeIcon
             icon={solidHeart}
             className="cursor-pointer text-red-500"
