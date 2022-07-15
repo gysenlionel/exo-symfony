@@ -1,3 +1,15 @@
+# Exo Symfony
+
+Technical hiring test consisting in saving a list of hotels in the favorites and restituting them in a client space with a Symfony API using API-platform on the server side and React on the client side.
+
+Test the routes with some unit tests (PHPUnit).
+
+## Tech Stack
+
+**Client:** React, Typescript, TailwindCSS
+
+**Server:** Symfony, API-Platform, MySQL
+
 ## Run Locally
 
 Clone the project
