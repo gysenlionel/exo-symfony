@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useMemo } from "react";
 import useFetch from "../hooks/useFetch";
 import { IHotelType } from "../types/hotels.model";
 import Card from "../components/Card";
@@ -40,26 +40,32 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
   const userFav = user?.favoris?.map((fav) => getIdFromSlug(fav));
 
-  const handleAdd = async (hotelId: number) => {
-    try {
-      const res = await axios.get(`${API}/users/${userId}/addfav/${hotelId}`);
-      reFetchHotels();
-      reFetchUsers();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  const handleRemove = async (hotelId: number) => {
-    try {
-      const res = await axios.get(
-        `${API}/users/${userId}/removefav/${hotelId}`
-      );
-      reFetchHotels();
-      reFetchUsers();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const handleAdd = useMemo(
+    () => async (hotelId: number) => {
+      try {
+        const res = await axios.get(`${API}/users/${userId}/addfav/${hotelId}`);
+        reFetchHotels();
+        reFetchUsers();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    []
+  );
+  const handleRemove = useMemo(
+    () => async (hotelId: number) => {
+      try {
+        const res = await axios.get(
+          `${API}/users/${userId}/removefav/${hotelId}`
+        );
+        reFetchHotels();
+        reFetchUsers();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    []
+  );
 
   return (
     <main className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-2 px-2">
