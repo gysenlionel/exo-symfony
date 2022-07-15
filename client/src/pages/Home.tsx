@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import useFetch from "../hooks/useFetch";
-import { IHotelType } from "../types/hotels.model";
+import { IHotelType } from "../types/hotels";
 import Card from "../components/Card";
-import { IUserType } from "../types/users.model";
+import { IUserType } from "../types/users";
 import { getIdFromSlug } from "../utils/getIdFromSlug";
 import axios from "axios";
 

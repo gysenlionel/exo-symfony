@@ -1,6 +1,6 @@
 import * as React from "react";
 import useFetch from "../hooks/useFetch";
-import { IHotelType } from "../types/hotels.model";
+import { IHotelType } from "../types/hotels";
 import { getIdFromSlug } from "../utils/getIdFromSlug";
 
 interface IFavorisProps {}
